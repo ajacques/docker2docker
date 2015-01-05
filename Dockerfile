@@ -6,5 +6,5 @@ RUN apt-get install -qy qemu-kvm socat curl dnsmasq iptables cloud-utils
 #RUN curl -L http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img >/cache/trusty.img
 #RUN ln -s /cache/trusty.img /system.img
 ADD bin /usr/local/bin
-EXPOSE 22/tcp 4243/tcp 5900/tcp
+EXPOSE 22/tcp 2376/tcp 5900/tcp
 CMD kvm-start

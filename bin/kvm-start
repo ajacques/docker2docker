@@ -10,7 +10,7 @@ qemu-img create -f qcow2 -o backing_file=system.img system.qc2
 }
 iptables -t nat -A POSTROUTING -s 172.18.0.0/24 -o eth0 -j MASQUERADE
 socat TCP-LISTEN:22,fork,reuseaddr TCP:172.18.0.2:22 &
-socat TCP-LISTEN:4243,fork,reuseaddr TCP:172.18.0.2:4243 &
+socat TCP-LISTEN:2376,fork,reuseaddr TCP:172.18.0.2:2376 &
 
 cat > cloudconfig <<EOF
 #cloud-config
@@ -19,7 +19,7 @@ chpasswd: { expire: False }
 ssh_pwauth: True
 runcmd:
   - cloud-init-per once dockerinstall curl https://get.docker.io/ | sh
-  - cloud-init-per once dockerconfig echo 'DOCKER_OPTS="-H tcp://0.0.0.0:4243 -H unix:///var/run/docker.sock"' >>/etc/default/docker
+  - cloud-init-per once dockerconfig echo 'DOCKER_OPTS="-H tcp://0.0.0.0:2376 -H unix:///var/run/docker.sock"' >>/etc/default/docker
   - cloud-init-per once dockerrestart service docker restart
 EOF
 
